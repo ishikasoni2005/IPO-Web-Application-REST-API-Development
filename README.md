@@ -1,153 +1,97 @@
-# 📈 IPO Web Application (React + Django REST API)
+# IPO Web Application
 
-A full-stack **IPO Tracking Web Application** built using **React for the frontend** and **Django with Django REST Framework for the backend**.  
-The platform allows users to explore **upcoming, ongoing, and recently listed IPOs**, view detailed company information, and track IPO subscription status through a modern web interface powered by REST APIs.
+A full-stack IPO tracking application built with a React frontend and a Django REST Framework backend. The app lets users browse IPO listings, open detailed IPO pages, and add new IPO records through a REST API.
 
----
+## Features
 
-# 🚀 Features
+- Browse IPO listings with search, status filtering, and sorting
+- View IPO details for a selected company
+- Add new IPO records from the dashboard form
+- REST API for IPO CRUD operations
+- React frontend connected to Django through Axios
+- CORS-enabled backend for local frontend development
 
-## 📊 IPO Dashboard
-- View **upcoming IPOs**
-- Track **ongoing IPO subscriptions**
-- Explore **recently listed IPOs**
-- Interactive and responsive UI
+## Tech Stack
 
-## 🔎 IPO Details
-- Company name and overview
-- IPO issue price
-- Lot size and issue size
-- IPO open and close dates
-- Listing date and exchange
-- Subscription status
+- Frontend: React, Vite, Axios, React Router
+- Backend: Django, Django REST Framework, django-cors-headers
+- Database: PostgreSQL when configured, otherwise SQLite fallback
 
-## 👤 User Features
-- User registration and login
-- Bookmark IPOs
-- Personal IPO watchlist
+## Project Structure
 
-## ⚡ REST API
-Backend APIs built using **Django REST Framework** for scalable and efficient communication between frontend and backend.
+```text
+project-root
+├── backend
+│   ├── manage.py
+│   ├── requirements.txt
+│   ├── config
+│   └── apps
+│       ├── api
+│       ├── core
+│       └── users
+├── frontend
+│   ├── package.json
+│   ├── .env.example
+│   └── src
+│       ├── components
+│       ├── pages
+│       ├── routes
+│       └── services
+├── IPO-TestDB.sql
+└── ipo-webapp-documentation.pages
+```
 
-Example endpoints:
+## API Endpoints
 
 | Method | Endpoint | Description |
-|------|------|------|
-| GET | `/api/ipos/` | Fetch all IPOs |
-| GET | `/api/ipos/{id}/` | Get IPO details |
-| POST | `/api/ipos/` | Add IPO |
-| PUT | `/api/ipos/{id}/` | Update IPO |
-| DELETE | `/api/ipos/{id}/` | Delete IPO |
+| --- | --- | --- |
+| GET | `/api/ipos` | Fetch all IPOs |
+| POST | `/api/ipos` | Create a new IPO |
+| GET | `/api/ipos/<id>` | Fetch a single IPO |
+| PUT | `/api/ipos/<id>` | Replace an IPO |
+| PATCH | `/api/ipos/<id>` | Update an IPO partially |
+| DELETE | `/api/ipos/<id>` | Delete an IPO |
 
----
+## Backend Notes
 
-# 🏗️ Tech Stack
+- Django apps:
+  - `apps.core`: ORM models and admin registration
+  - `apps.api`: serializers, views, tests, and API routing
+  - `apps.users`: reserved for future authentication work
+- CORS is configured for local React development through `django-cors-headers`
+- The backend preserves slashless endpoints to match the existing frontend calls
 
-## Frontend
-- React
-- Axios
-- React Router
-- Tailwind CSS / Bootstrap
+## Installation
 
-## Backend
-- Django
-- Django REST Framework
-- PostgreSQL / SQLite
-- Django Authentication
-
-## Tools
-- Git & GitHub
-- REST API Architecture
-- JSON Data Exchange
-
----
-
-# 📂 Project Structure
-
-
-
-ipo-web-app
-│
-├── backend
-│ ├── ipo_project
-│ ├── ipo_api
-│ ├── manage.py
-│ └── requirements.txt
-│
-├── frontend
-│ ├── public
-│ ├── src
-│ │ ├── components
-│ │ ├── pages
-│ │ ├── services
-│ │ ├── App.js
-│ │ └── index.js
-│
-└── README.md
-
-
-
----
-
-# ⚙️ Installation
-
-## 1️⃣ Clone the Repository
+### Backend
 
 ```bash
-git clone https://github.com/yourusername/ipo-web-app.git
-cd ipo-web-app
-
-
 cd backend
-
-python -m venv venv
-
-source venv/bin/activate   # Mac/Linux
-venv\Scripts\activate      # Windows
-
+python3 -m venv .venv
+source .venv/bin/activate
 pip install -r requirements.txt
-
+cp .env.example .env
 python manage.py migrate
 python manage.py runserver
+```
 
-Backend runs on:
-http://127.0.0.1:8000
+Backend default URL: `http://127.0.0.1:8000`
 
+### Frontend
 
-💻 Frontend Setup (React)
+```bash
 cd frontend
-
 npm install
-npm start
-Frontend runs on:
-http://localhost:3000
+cp .env.example .env
+npm run dev
+```
 
+Frontend default URL: `http://127.0.0.1:5173`
 
-🔗 API Integration Example
-import axios from "axios";
+The frontend expects the backend API base URL to be `http://127.0.0.1:8000/api` unless `VITE_API_BASE_URL` is overridden.
 
-const API_URL = "http://127.0.0.1:8000/api/ipos/";
+## Verification
 
-export const fetchIPOs = async () => {
-  const response = await axios.get(API_URL);
-  return response.data;
-};
-📊 Example IPO Data
-{
-  "company_name": "ABC Tech Ltd",
-  "issue_price": "₹320",
-  "lot_size": 45,
-  "open_date": "2026-04-01",
-  "close_date": "2026-04-03",
-  "listing_date": "2026-04-10"
-}
-🔮 Future Improvements
-Live IPO data integration using stock market APIs
-IPO subscription analytics
-Portfolio tracking
-Email and push notifications
-Admin dashboard for IPO management
-👩‍💻 Author
-Ishika
-Computer Science Student
-Backend Developer | AI/ML Enthusiast
+- `python manage.py check`
+- `python manage.py test`
+- `npm run build`
