@@ -64,7 +64,6 @@ project-root
 ## Installation
 
 ### Backend
-
 ```bash
 cd backend
 python3 -m venv .venv
